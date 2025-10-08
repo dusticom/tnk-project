@@ -1,5 +1,27 @@
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+type DataSourceItem = {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+};
+
+type Column = {
+  title: string;
+  dataIndex: keyof DataSourceItem;
+  key: string;
+};
+
 export default function Home() {
-  const dataSource = [
+  const dataSource: DataSourceItem[] = [
     {
       key: "1",
       name: "John Doe",
@@ -19,7 +41,7 @@ export default function Home() {
       address: "12 Downing Street",
     },
   ];
-  const columns = [
+  const columns: Column[] = [
     {
       title: "Name",
       dataIndex: "name",
@@ -38,13 +60,28 @@ export default function Home() {
   ];
   return (
     <>
-      <h1>Welcome to Next.js!</h1>
-    
-
-      <div className="bg-gray-500 p-4 rounded-lg shadow-md">
-        <p className="text-center">This is a simple Next.js application.</p>
-      </div>
+    <div className="p-10">
+ <Table>
+    <TableCaption>A list of your recent invoices.</TableCaption>
+    <TableHeader>
+      <TableRow>
+       {columns.map((column) => (
+        <TableHead key={column.key}>{column.title}</TableHead>
+       ))}
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {dataSource.map((data) => (
+        <TableRow key={data.key}>
+          {columns.map((column) => (
+            <TableCell key={column.key}>{data[column.dataIndex]}</TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table> 
+    </div>
+   
     </>
-    
   );
 }
